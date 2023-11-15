@@ -89,8 +89,10 @@ const GrowthLineGraph = () => {
       skipEmptyLines: true,
       complete: (result) => {
         const transformedData = transformCsvData(
-          result.data as GrowthDataEntry[]
+          result.data as GrowthDataEntry[],
+          patientData.sex
         );
+
         setGrowthData(transformedData);
         setMaxYValue(calculateMaxYValue(transformedData));
       },

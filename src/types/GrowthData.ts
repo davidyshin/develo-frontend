@@ -2,14 +2,8 @@ export type MeasurementType = "weight" | "height" | "bmi";
 
 export interface GrowthDataEntry {
   Agemos: number;
+  Sex: number;
   P3: number;
-  P5: number;
-  P10: number;
-  P25: number;
-  P50: number;
-  P75: number;
-  P90: number;
-  P95: number;
   P97: number;
 }
 
