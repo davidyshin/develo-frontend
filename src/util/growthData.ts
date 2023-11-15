@@ -1,16 +1,22 @@
 import { GrowthDataEntry } from "../types/GrowthData";
 
-export const transformCsvData = (csvData: GrowthDataEntry[], sex: number) => {
-  return csvData
-    .filter((row) => row.Sex === sex)
-    .map((row) => ({
-      Agemos: Number(row.Agemos),
-      P3: Number(row.P3),
-      P97: Number(row.P97),
-      Sex: Number(row.Sex),
-      // For the area portion of my graph
-      range: [Number(row.P3), Number(row.P97)],
-    }));
+export const transformCsvData = (
+  csvData: GrowthDataEntry[],
+  patientSex: number
+) => {
+  return (
+    csvData
+      // Strip csv data for just the information we need
+      // Ideally this would all be done in the backend?
+      .map((row) => ({
+        Agemos: Number(row.Agemos),
+        P3: Number(row.P3),
+        P97: Number(row.P97),
+        Sex: Number(row.Sex),
+        // For the area portion of my graph
+        range: [Number(row.P3), Number(row.P97)],
+      }))
+  );
 };
 
 // Just a small util function to get cleaner labels for measurement type
