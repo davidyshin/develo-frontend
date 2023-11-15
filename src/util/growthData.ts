@@ -5,6 +5,8 @@ export const transformCsvData = (
   patientSex: number
 ) => {
   return csvData
+  // Strip csv data for just the information we need
+  // Ideally this would all be done in the backend?
     .map((row) => ({
       Agemos: Number(row.Agemos),
       Sex: Number(row.Sex),

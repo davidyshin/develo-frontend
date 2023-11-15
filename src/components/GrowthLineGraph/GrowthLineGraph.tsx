@@ -23,6 +23,7 @@ import {
   measurementToLabel,
 } from "../../util/growthData";
 
+// Dummy patient data
 const patientData: PatientData = {
   sex: 1,
   weight: [
@@ -126,11 +127,7 @@ const GrowthLineGraph = () => {
       </div>
 
       <ResponsiveContainer width="100%" height={600}>
-        <LineChart
-          data={growthData}
-          margin={{ top: 10, right: 30, left: 20, bottom: 5 }}
-          style={{ backgroundColor: "white" }}
-        >
+        <LineChart data={growthData} style={{ backgroundColor: "white" }}>
           <CartesianGrid strokeDasharray="5 5" />
           <XAxis
             dataKey="Agemos"
