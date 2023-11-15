@@ -151,20 +151,8 @@ const GrowthLineGraph = () => {
           <Tooltip labelFormatter={ageLabelFormatter} />
           <Legend />
 
-          <Line
-            type="monotone"
-            dataKey="P3"
-            stroke="red"
-            dot={false}
-            animationDuration={500}
-          />
-          <Line
-            type="monotone"
-            dataKey="P97"
-            stroke="green"
-            dot={false}
-            animationDuration={500}
-          />
+          <Line dataKey="P3" stroke="#8BC34A" dot={false} />
+          <Line dataKey="P97" stroke="#42A5F5" dot={false} />
 
           <Line
             type="monotone"
