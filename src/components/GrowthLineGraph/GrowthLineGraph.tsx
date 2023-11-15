@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import {
-  LineChart,
   Line,
   XAxis,
   YAxis,
@@ -8,6 +7,8 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Area,
+  ComposedChart,
 } from "recharts";
 
 import { readRemoteFile } from "react-papaparse";
@@ -17,11 +18,7 @@ import {
   Measurement,
   MeasurementType,
 } from "../../types/GrowthData";
-import {
-  transformCsvData,
-  calculateMaxYValue,
-  measurementToLabel,
-} from "../../util/growthData";
+import { transformCsvData, measurementToLabel } from "../../util/growthData";
 
 // Dummy patient data
 const patientData: PatientData = {
@@ -78,7 +75,6 @@ const GrowthLineGraph = () => {
   const [selectedMeasurement, setSelectedMeasurement] =
     useState<MeasurementType>("weight");
   const [growthData, setGrowthData] = useState<GrowthDataEntry[]>([]);
-  const [maxYValue, setMaxYValue] = useState<number>(0);
 
   useEffect(() => {
     const filePath = `/data/${selectedMeasurement}-for-age.csv`;
@@ -95,7 +91,6 @@ const GrowthLineGraph = () => {
         );
 
         setGrowthData(transformedData);
-        setMaxYValue(calculateMaxYValue(transformedData));
       },
     });
   }, [selectedMeasurement]);
@@ -105,7 +100,7 @@ const GrowthLineGraph = () => {
     patientData[selectedMeasurement];
 
   return (
-    <div style={{ padding: "50px" }}>
+    <div style={{ padding: "100px" }}>
       <div style={{ marginBottom: "10px" }}>
         <label htmlFor="measurement-select">Select Measurement: </label>
         <select
@@ -127,18 +122,17 @@ const GrowthLineGraph = () => {
       </div>
 
       <ResponsiveContainer width="100%" height={600}>
-        <LineChart data={growthData} style={{ backgroundColor: "white" }}>
+        <ComposedChart data={growthData} style={{ backgroundColor: "white" }}>
           <CartesianGrid strokeDasharray="5 5" />
           <XAxis
             dataKey="Agemos"
             label={{
               value: "Age (Months)",
+              offset: -5,
               position: "insideBottomRight",
-              offset: -10,
             }}
           />
           <YAxis
-            domain={[0, maxYValue]}
             allowDataOverflow
             label={{
               value: measurementToLabel(selectedMeasurement),
@@ -149,19 +143,22 @@ const GrowthLineGraph = () => {
 
           <Tooltip labelFormatter={ageLabelFormatter} />
           <Legend />
-
-          <Line dataKey="P3" stroke="#8BC34A" dot={false} />
-          <Line dataKey="P97" stroke="#42A5F5" dot={false} />
-
+          <Area
+            name="Percentile Range"
+            dataKey="range"
+            stroke="#42A5F5"
+            fill="#42A5F5"
+            fillOpacity={0.3}
+          />
           <Line
+            type="monotone"
             data={patientMeasurementData}
             dataKey="value"
-            // Maybe `${patient.name} ${selectedMeasurement}`
             name={`Patient ${measurementToLabel(selectedMeasurement)}`}
             stroke="#000000"
             strokeWidth={2}
           />
-        </LineChart>
+        </ComposedChart>
       </ResponsiveContainer>
     </div>
   );

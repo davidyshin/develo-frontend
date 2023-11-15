@@ -1,4 +1,3 @@
-
 // Might've been better to use enum here
 export type MeasurementType = "weight" | "height" | "bmi";
 
@@ -7,6 +6,7 @@ export interface GrowthDataEntry {
   Sex: number;
   P3: number;
   P97: number;
+  range: number[];
 }
 
 export interface Measurement {

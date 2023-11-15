@@ -1,28 +1,16 @@
 import { GrowthDataEntry } from "../types/GrowthData";
 
-export const transformCsvData = (
-  csvData: GrowthDataEntry[],
-  patientSex: number
-) => {
+export const transformCsvData = (csvData: GrowthDataEntry[], sex: number) => {
   return csvData
-  // Strip csv data for just the information we need
-  // Ideally this would all be done in the backend?
+    .filter((row) => row.Sex === sex)
     .map((row) => ({
       Agemos: Number(row.Agemos),
-      Sex: Number(row.Sex),
       P3: Number(row.P3),
       P97: Number(row.P97),
-    }))
-    .filter((entry) => entry.Sex === patientSex);
-};
-
-// Calculates the maximum Y value according to the highest value in the P97 column.
-// This is a very heavy assumption, that P97 has the highest values in the CSv.
-export const calculateMaxYValue = (growthData: GrowthDataEntry[]): number => {
-  const maxGrowthValue = Math.max(
-    ...growthData.map((d) => d.P97).filter((p97) => !isNaN(p97))
-  );
-  return Math.ceil(maxGrowthValue);
+      Sex: Number(row.Sex),
+      // For the area portion of my graph
+      range: [Number(row.P3), Number(row.P97)],
+    }));
 };
 
 // Just a small util function to get cleaner labels for measurement type
