@@ -6,10 +6,13 @@ export const transformCsvData = (
 ) => {
   return (
     csvData
+      // Account for sex
+      .filter((r) => r.Sex === patientSex)
       // Strip csv data for just the information we need
       // Ideally this would all be done in the backend?
       .map((row) => ({
-        Agemos: Number(row.Agemos),
+        // To account for half months
+        Agemos: row.Agemos === 0 ? 0 : Number(row.Agemos) - 0.5,
         P3: Number(row.P3),
         P97: Number(row.P97),
         Sex: Number(row.Sex),
