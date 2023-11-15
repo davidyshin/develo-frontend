@@ -154,14 +154,12 @@ const GrowthLineGraph = () => {
           <Line dataKey="P97" stroke="#42A5F5" dot={false} />
 
           <Line
-            type="monotone"
             data={patientMeasurementData}
             dataKey="value"
             // Maybe `${patient.name} ${selectedMeasurement}`
             name={`Patient ${measurementToLabel(selectedMeasurement)}`}
             stroke="#000000"
             strokeWidth={2}
-            animationDuration={500}
           />
         </LineChart>
       </ResponsiveContainer>

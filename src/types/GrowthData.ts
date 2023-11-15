@@ -1,3 +1,5 @@
+
+// Might've been better to use enum here
 export type MeasurementType = "weight" | "height" | "bmi";
 
 export interface GrowthDataEntry {
